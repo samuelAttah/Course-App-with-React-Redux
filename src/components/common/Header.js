@@ -5,15 +5,25 @@ const Header = () => {
   const activeStyle = { color: "#F15B2A" };
   return (
     <nav>
-      <NavLink to="/" activeStyle={activeStyle} exact>
+      <NavLink
+        to="/"
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+        exact
+      >
         Home
       </NavLink>
       {" | "}
-      <NavLink to="/courses" activeStyle={activeStyle}>
+      <NavLink
+        to="/courses"
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+      >
         Courses
       </NavLink>
       {" | "}
-      <NavLink to="/about" activeStyle={activeStyle}>
+      <NavLink
+        to="/about"
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+      >
         About
       </NavLink>
     </nav>

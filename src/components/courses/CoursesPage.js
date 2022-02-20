@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Spinner from "../common/Spinner";
 import CourseList from "./CourseList";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const CoursesPage = ({ courses, authors, actions }) => {
@@ -41,8 +41,8 @@ const CoursesPage = ({ courses, authors, actions }) => {
 
   return (
     <>
-      {isDeleted ? window.location.reload() : null}
-      {redirectToAddCoursePage && <Redirect to="/course/" />}
+      {isDeleted && window.location.reload()}
+      {redirectToAddCoursePage && <Navigate to="/course/" />}
       <h2>Courses</h2>
       {authors.length === 0 || courses.length === 0 ? (
         <Spinner />

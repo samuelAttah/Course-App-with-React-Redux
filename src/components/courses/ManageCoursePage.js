@@ -7,6 +7,7 @@ import { newCourse } from "../../mockData";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const ManageCoursePage = ({
   courses,
   authors,
@@ -19,6 +20,8 @@ const ManageCoursePage = ({
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -64,7 +67,7 @@ const ManageCoursePage = ({
     saveCourse(course)
       .then(() => {
         toast.success("Course Saved");
-        history.push("/courses/");
+        navigate("/courses/");
       })
       .catch((error) => {
         setSaving(false);
@@ -95,7 +98,6 @@ ManageCoursePage.propTypes = {
   loadAuthors: PropTypes.func.isRequired,
   loadCourses: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = {
@@ -108,8 +110,8 @@ export const getCourseBySlug = (courses, slug) => {
   return courses.find((course) => course.slug === slug) || null;
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const slug = ownProps.match.params.slug;
+const mapStateToProps = (state, params) => {
+  const { slug } = params;
   const course =
     slug && state.courses.length > 0
       ? getCourseBySlug(state.courses, slug)
